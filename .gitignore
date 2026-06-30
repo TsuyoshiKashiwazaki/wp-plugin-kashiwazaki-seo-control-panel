@@ -1,0 +1,52 @@
+# === 内部作業ファイル（配布禁止） ===
+.3ai-work/
+
+# === AI / 開発ツール設定（公開リポジトリに入れない） ===
+CLAUDE.md
+.codex
+.cursor/
+.aider*
+.copilot/
+.github/copilot/
+.playwright-mcp/
+
+# === 一時ファイル ===
+.tmp/
+/-f
+/-t
+/-t.progress
+
+# === スクリーンショット・ゴミ（ルートレベル） ===
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.bmp
+/*.md.bak
+
+# === 依存管理（配布しない） ===
+/vendor/
+/node_modules/
+composer.json
+composer.lock
+package.json
+package-lock.json
+
+# === IDE ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === ビルド ===
+/build/
+/dist/
+*.log
+
+# === WordPress（誤コミット防止） ===
+wp-config.php

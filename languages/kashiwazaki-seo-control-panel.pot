@@ -1,0 +1,413 @@
+# Copyright (C) 2026 柏崎剛 (Tsuyoshi Kashiwazaki)
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kashiwazaki SEO ControlPanel 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-plugin-kashiwazaki-seo-control-panel\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-30T08:13:42+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: kashiwazaki-seo-control-panel\n"
+
+#. Plugin Name of the plugin
+#: wp-plugin-kashiwazaki-seo-control-panel.php
+#: admin/class-kscp-admin.php:50
+#: admin/class-kscp-admin.php:51
+#: admin/class-kscp-admin.php:102
+#: admin/views/header.php:26
+msgid "Kashiwazaki SEO ControlPanel"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: wp-plugin-kashiwazaki-seo-control-panel.php
+msgid "https://www.tsuyoshikashiwazaki.jp"
+msgstr ""
+
+#. Description of the plugin
+#: wp-plugin-kashiwazaki-seo-control-panel.php
+msgid "柏崎剛が公開する wp- 付きプラグイン/テーマの最新版を単一マニフェストから取得し、インストール済みバージョンが古い場合に管理画面とメールで通知する作者専用コントロールパネル。アクセストークン不要。本プラグイン自身の自己更新にも対応。"
+msgstr ""
+
+#. Author of the plugin
+#: wp-plugin-kashiwazaki-seo-control-panel.php
+#: admin/views/footer.php:16
+msgid "柏崎剛 (Tsuyoshi Kashiwazaki)"
+msgstr ""
+
+#. Author URI of the plugin
+#: wp-plugin-kashiwazaki-seo-control-panel.php
+msgid "https://www.tsuyoshikashiwazaki.jp/profile/"
+msgstr ""
+
+#: admin/class-kscp-admin.php:70
+msgid "設定"
+msgstr ""
+
+#: admin/class-kscp-admin.php:117
+msgid "まだチェックを実行していません。"
+msgstr ""
+
+#. translators: %d: number of updates
+#: admin/class-kscp-admin.php:122
+#, php-format
+msgid "%d 件の更新があります。"
+msgid_plural "%d 件の更新があります。"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of security updates
+#: admin/class-kscp-admin.php:129
+#, php-format
+msgid "（うちセキュリティ %d 件）"
+msgstr ""
+
+#: admin/class-kscp-admin.php:136
+msgid "すべて最新です。"
+msgstr ""
+
+#: admin/class-kscp-admin.php:138
+msgid "コントロールパネルを開く"
+msgstr ""
+
+#: admin/class-kscp-admin.php:147
+#: admin/class-kscp-admin.php:170
+#: admin/class-kscp-admin.php:219
+msgid "権限がありません。"
+msgstr ""
+
+#: admin/class-kscp-admin.php:271
+msgid "設定を保存しました。"
+msgstr ""
+
+#: admin/class-kscp-admin.php:272
+msgid "最新情報を再取得しました。"
+msgstr ""
+
+#: admin/views/header.php:14
+msgid "更新一覧"
+msgstr ""
+
+#: admin/views/header.php:15
+msgid "ニュース"
+msgstr ""
+
+#: admin/views/header.php:16
+msgid "通知・設定"
+msgstr ""
+
+#: admin/views/header.php:17
+msgid "診断"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:16
+msgid "接続診断"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:20
+#: admin/views/tab-settings.php:74
+msgid "マニフェスト URL"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:24
+msgid "マニフェスト取得"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:27
+msgid "正常"
+msgstr ""
+
+#. translators: %d: item count
+#: admin/views/tab-diagnostics.php:31
+#, php-format
+msgid "（%d 件）"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:36
+msgid "取得できませんでした"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:44
+msgid "マニフェスト生成日時"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:54
+msgid "次回自動チェック"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:59
+msgid "未スケジュール"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:67
+msgid "本プラグインは GitHub API を個別に呼び出さず、作者が公開する単一のマニフェスト（4時間ごとに自動更新）を取得して最新版を判定します。アクセストークンは不要です。"
+msgstr ""
+
+#: admin/views/tab-diagnostics.php:74
+msgid "マニフェストを再取得して再チェック"
+msgstr ""
+
+#: admin/views/tab-news.php:16
+msgid "柏崎剛 ニュース"
+msgstr ""
+
+#: admin/views/tab-news.php:18
+msgid "すべてのニュースを見る"
+msgstr ""
+
+#: admin/views/tab-news.php:24
+msgid "ニュースの取得は設定で無効化されています。"
+msgstr ""
+
+#: admin/views/tab-news.php:26
+msgid "ニュースを取得できませんでした。時間をおいて再度お試しください。"
+msgstr ""
+
+#: admin/views/tab-overview.php:18
+msgid "更新あり"
+msgstr ""
+
+#: admin/views/tab-overview.php:19
+msgid "最新"
+msgstr ""
+
+#: admin/views/tab-overview.php:20
+#: includes/class-kscp-notifier.php:151
+msgid "未インストール"
+msgstr ""
+
+#: admin/views/tab-overview.php:21
+msgid "取得失敗"
+msgstr ""
+
+#: admin/views/tab-overview.php:26
+#, php-format
+msgid "更新あり: %d"
+msgstr ""
+
+#: admin/views/tab-overview.php:27
+#, php-format
+msgid "セキュリティ: %d"
+msgstr ""
+
+#: admin/views/tab-overview.php:28
+#, php-format
+msgid "監視対象: %d"
+msgstr ""
+
+#: admin/views/tab-overview.php:33
+msgid "今すぐチェック"
+msgstr ""
+
+#. translators: %s: datetime
+#: admin/views/tab-overview.php:41
+#, php-format
+msgid "最終チェック: %s"
+msgstr ""
+
+#: admin/views/tab-overview.php:50
+msgid "まだチェックを実行していません。「今すぐチェック」を押してください。"
+msgstr ""
+
+#: admin/views/tab-overview.php:55
+msgid "名前"
+msgstr ""
+
+#: admin/views/tab-overview.php:56
+msgid "種別"
+msgstr ""
+
+#: admin/views/tab-overview.php:57
+msgid "導入済み"
+msgstr ""
+
+#: admin/views/tab-overview.php:58
+msgid "最新版"
+msgstr ""
+
+#: admin/views/tab-overview.php:59
+msgid "最終更新日"
+msgstr ""
+
+#: admin/views/tab-overview.php:60
+msgid "ステータス"
+msgstr ""
+
+#: admin/views/tab-overview.php:61
+msgid "詳細"
+msgstr ""
+
+#: admin/views/tab-overview.php:79
+msgid "本体"
+msgstr ""
+
+#: admin/views/tab-overview.php:82
+msgid "⚠ セキュリティ"
+msgstr ""
+
+#: admin/views/tab-overview.php:86
+#: includes/class-kscp-notifier.php:148
+msgid "テーマ"
+msgstr ""
+
+#: admin/views/tab-overview.php:86
+#: includes/class-kscp-notifier.php:149
+msgid "プラグイン"
+msgstr ""
+
+#: admin/views/tab-overview.php:103
+msgid "GitHub で見る"
+msgstr ""
+
+#: admin/views/tab-overview.php:114
+msgid "※ 本バージョンは更新の検知・通知・GitHub への誘導までを行います。監視対象の自動更新は行いません（本体 Kashiwazaki SEO ControlPanel 自身の更新を除く）。"
+msgstr ""
+
+#: admin/views/tab-settings.php:15
+msgid "毎時"
+msgstr ""
+
+#: admin/views/tab-settings.php:16
+#: includes/class-kscp-cron.php:54
+msgid "6時間ごと"
+msgstr ""
+
+#: admin/views/tab-settings.php:17
+msgid "日次"
+msgstr ""
+
+#: admin/views/tab-settings.php:18
+#: includes/class-kscp-cron.php:60
+msgid "週次"
+msgstr ""
+
+#: admin/views/tab-settings.php:25
+#: admin/views/tab-settings.php:28
+msgid "メール通知"
+msgstr ""
+
+#: admin/views/tab-settings.php:32
+msgid "更新を検知したらメールで通知する"
+msgstr ""
+
+#: admin/views/tab-settings.php:37
+msgid "通知先メールアドレス"
+msgstr ""
+
+#: admin/views/tab-settings.php:44
+msgid "セキュリティ更新"
+msgstr ""
+
+#: admin/views/tab-settings.php:48
+msgid "セキュリティ更新は優先して即時通知する"
+msgstr ""
+
+#: admin/views/tab-settings.php:50
+msgid "日次・週次ダイジェストは将来バージョンで対応予定です。"
+msgstr ""
+
+#: admin/views/tab-settings.php:55
+msgid "チェック頻度"
+msgstr ""
+
+#: admin/views/tab-settings.php:58
+msgid "自動チェック間隔"
+msgstr ""
+
+#: admin/views/tab-settings.php:71
+msgid "データソース"
+msgstr ""
+
+#: admin/views/tab-settings.php:78
+msgid "全プラグイン/テーマの最新版情報をまとめた単一 JSON の URL。空欄なら既定（作者が公開・4時間ごとに自動更新）を使用します。アクセストークンは不要です。"
+msgstr ""
+
+#: admin/views/tab-settings.php:82
+msgid "キャッシュ保持時間（秒）"
+msgstr ""
+
+#: admin/views/tab-settings.php:86
+msgid "3600〜86400 秒（1時間〜1日）。"
+msgstr ""
+
+#: admin/views/tab-settings.php:91
+msgid "プライバシー（外部通信）"
+msgstr ""
+
+#: admin/views/tab-settings.php:93
+msgid "本プラグインは次の外部サーバへ通信します: マニフェスト配信元（既定 raw.githubusercontent.com、最新版情報の取得）、www.tsuyoshikashiwazaki.jp（ニュースの取得）。送信するのは取得リクエストのみで、サイトの個人情報やアクセストークンは送信しません。"
+msgstr ""
+
+#: admin/views/tab-settings.php:97
+msgid "作者ニュース取得"
+msgstr ""
+
+#: admin/views/tab-settings.php:101
+msgid "www.tsuyoshikashiwazaki.jp からニュースを取得する"
+msgstr ""
+
+#: admin/views/tab-settings.php:107
+msgid "監視対象の除外"
+msgstr ""
+
+#: admin/views/tab-settings.php:110
+msgid "除外する slug"
+msgstr ""
+
+#: admin/views/tab-settings.php:113
+msgid "監視から外す slug を改行またはカンマ区切りで入力（本体 Kashiwazaki SEO ControlPanel は除外できません）。"
+msgstr ""
+
+#: admin/views/tab-settings.php:118
+msgid "設定を保存"
+msgstr ""
+
+#: includes/class-kscp-notifier.php:134
+msgid "[セキュリティ] "
+msgstr ""
+
+#. translators: %d: number of updates
+#: includes/class-kscp-notifier.php:137
+#, php-format
+msgid "[Kashiwazaki SEO ControlPanel] %d 件の更新があります"
+msgstr ""
+
+#. translators: %s: site name
+#: includes/class-kscp-notifier.php:144
+#, php-format
+msgid "%s で監視中のプラグイン/テーマに更新が見つかりました。"
+msgstr ""
+
+#: includes/class-kscp-notifier.php:150
+msgid "【セキュリティ】 "
+msgstr ""
+
+#. translators: 1: current version, 2: latest version
+#: includes/class-kscp-notifier.php:162
+#, php-format
+msgid "  現在: %1$s → 最新: %2$s"
+msgstr ""
+
+#: includes/class-kscp-notifier.php:172
+msgid "管理画面のコントロールパネル: "
+msgstr ""
+
+#: includes/class-kscp-notifier.php:173
+msgid "この通知は Kashiwazaki SEO ControlPanel の設定で停止できます。"
+msgstr ""
+
+#: includes/class-kscp-self-updater.php:145
+msgid "柏崎剛が公開する wp- 付きプラグイン/テーマの最新版を監視・通知する作者専用コントロールパネル。"
+msgstr ""
+
+#: includes/class-kscp-self-updater.php:177
+msgid "ファイルシステムを初期化できませんでした。"
+msgstr ""
+
+#: includes/class-kscp-self-updater.php:191
+msgid "更新ファイルのフォルダ名修正に失敗しました。"
+msgstr ""

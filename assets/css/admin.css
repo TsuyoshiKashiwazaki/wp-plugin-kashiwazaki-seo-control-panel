@@ -1,0 +1,242 @@
+/* Kashiwazaki SEO ControlPanel — 管理画面スタイル */
+
+.kscp-wrap .kscp-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.kscp-wrap .kscp-title .dashicons {
+	color: #2271b1;
+	font-size: 26px;
+	width: 26px;
+	height: 26px;
+}
+.kscp-wrap .kscp-ver {
+	font-size: 12px;
+	color: #646970;
+	font-weight: 400;
+}
+
+.kscp-tab-content {
+	margin-top: 16px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	padding: 16px 20px;
+}
+
+/* サマリーバー */
+.kscp-summary-bar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+.kscp-chip {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 12px;
+	background: #f0f0f1;
+	font-size: 12px;
+	font-weight: 600;
+}
+.kscp-chip-update { background: #fcf2d8; }
+.kscp-chip-security { background: #f7d9d9; color: #8a1f1f; }
+.kscp-lastcheck { color: #646970; font-size: 12px; }
+.kscp-recheck-form { margin: 0; }
+
+/* テーブル */
+.kscp-table .kscp-cell-name strong { font-size: 13px; }
+.kscp-table .kscp-slug {
+	font-size: 11px;
+	color: #787c82;
+	font-family: Consolas, Monaco, monospace;
+}
+.kscp-row-self { background: #eef6ff !important; }
+.kscp-row-security td { box-shadow: inset 4px 0 0 #d63638; }
+.kscp-row-update td { box-shadow: inset 4px 0 0 #dba617; }
+
+.kscp-badge {
+	display: inline-block;
+	padding: 1px 7px;
+	border-radius: 9px;
+	font-size: 10px;
+	font-weight: 700;
+	vertical-align: middle;
+	margin-left: 4px;
+}
+.kscp-badge-self { background: #2271b1; color: #fff; }
+.kscp-badge-security { background: #d63638; color: #fff; }
+
+.kscp-status {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 600;
+}
+.kscp-status-update-available { background: #fcf2d8; color: #8a6d00; }
+.kscp-status-up-to-date { background: #e6f4ea; color: #1a7a33; }
+.kscp-status-not-installed { background: #f0f0f1; color: #646970; }
+.kscp-status-unknown { background: #f3e0e0; color: #8a1f1f; }
+
+.kscp-note { color: #646970; font-size: 12px; margin-top: 12px; }
+.kscp-empty { color: #646970; padding: 20px 0; }
+
+/* ニュース */
+.kscp-news-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+.kscp-news-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 16px;
+}
+.kscp-news-card {
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	overflow: hidden;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+}
+.kscp-news-thumb {
+	display: block;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background: #f0f0f1;
+}
+.kscp-news-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.kscp-news-body { padding: 10px 12px; }
+.kscp-news-date { font-size: 11px; color: #787c82; }
+.kscp-news-title { font-size: 14px; margin: 4px 0 6px; line-height: 1.4; }
+.kscp-news-title a { text-decoration: none; }
+.kscp-news-excerpt { font-size: 12px; color: #50575e; margin: 0; }
+
+/* 診断 */
+.kscp-diag th { width: 220px; }
+.kscp-ok { color: #1a7a33; font-weight: 600; }
+.kscp-ng { color: #d63638; font-weight: 600; }
+.kscp-diag-actions form { margin-top: 12px; }
+.kscp-privacy-note {
+	background: #f6f7f7;
+	border-left: 4px solid #2271b1;
+	padding: 10px 12px;
+	max-width: 800px;
+}
+
+/* フッタ */
+.kscp-footer { margin-top: 16px; color: #646970; font-size: 12px; }
+
+/* ダッシュボードウィジェット */
+/* ダッシュボードウィジェット（華やか版） */
+.kscp-dw { margin: -12px; padding: 0; }
+.kscp-dw-hero {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 20px 18px;
+	color: #fff;
+	background: linear-gradient( 135deg, #2271b1 0%, #135e96 100% );
+}
+.kscp-dw--update .kscp-dw-hero { background: linear-gradient( 135deg, #f0a020 0%, #d97706 100% ); }
+.kscp-dw--security .kscp-dw-hero { background: linear-gradient( 135deg, #f43f5e 0%, #b91c1c 100% ); }
+.kscp-dw--ok .kscp-dw-hero { background: linear-gradient( 135deg, #22c55e 0%, #15803d 100% ); }
+.kscp-dw--idle .kscp-dw-hero { background: linear-gradient( 135deg, #64748b 0%, #475569 100% ); }
+
+.kscp-dw-num {
+	font-size: 46px;
+	font-weight: 800;
+	line-height: 1;
+	min-width: 56px;
+	text-align: center;
+	text-shadow: 0 2px 6px rgba( 0, 0, 0, 0.18 );
+}
+.kscp-dw-icon { font-size: 42px; width: 42px; height: 42px; }
+.kscp-dw-text { display: flex; flex-direction: column; gap: 4px; }
+.kscp-dw-title { font-size: 16px; font-weight: 700; }
+.kscp-dw-sub { font-size: 12px; opacity: 0.92; }
+.kscp-dw-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	align-self: flex-start;
+	margin-top: 2px;
+	padding: 2px 10px;
+	font-size: 12px;
+	font-weight: 700;
+	color: #b91c1c;
+	background: #fff;
+	border-radius: 999px;
+}
+.kscp-dw-badge .dashicons { font-size: 14px; width: 14px; height: 14px; }
+.kscp-dw-cta {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	padding: 12px;
+	font-weight: 700;
+	text-decoration: none;
+	color: #1d2327;
+	background: #f6f7f7;
+	border-top: 1px solid #e0e0e0;
+	transition: background 0.15s ease;
+}
+.kscp-dw-cta:hover { background: #eef1f3; color: #135e96; }
+.kscp-dw-cta .dashicons { transition: transform 0.15s ease; }
+.kscp-dw-cta:hover .dashicons { transform: translateX( 3px ); }
+
+.kscp-dw-list { margin: 0; padding: 8px 16px 4px; list-style: none; }
+.kscp-dw-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 0;
+	border-bottom: 1px solid #f0f0f1;
+	font-size: 13px;
+}
+.kscp-dw-item:last-child { border-bottom: none; }
+.kscp-dw-dot {
+	flex: 0 0 auto;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #dba617;
+}
+.kscp-dw-dot--sec { background: #d63638; }
+.kscp-dw-name {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 600;
+	color: #1d2327;
+}
+.kscp-dw-tag {
+	display: inline-block;
+	padding: 0 6px;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 16px;
+	color: #fff;
+	background: #d63638;
+	border-radius: 8px;
+	vertical-align: middle;
+}
+.kscp-dw-ver {
+	flex: 0 0 auto;
+	font-size: 11px;
+	color: #646970;
+	font-family: Consolas, Monaco, monospace;
+}
+.kscp-dw-more { margin: 0; padding: 2px 16px 10px; color: #646970; font-size: 12px; }

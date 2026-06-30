@@ -1,0 +1,37 @@
+=== Kashiwazaki SEO ControlPanel ===
+Contributors: tsuyoshikashiwazaki
+Author URI: https://www.tsuyoshikashiwazaki.jp/profile/
+Plugin URI: https://www.tsuyoshikashiwazaki.jp
+Tags: github, update, security, control-panel
+Requires at least: 5.8
+Requires PHP: 7.2
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+柏崎剛が公開する wp- 付きプラグイン/テーマの最新版を単一マニフェストから取得し、古いバージョンを検知して通知する作者専用コントロールパネル。アクセストークン不要。
+
+== Description ==
+
+WordPress 公式ディレクトリ未申請のプラグイン/テーマは標準の自動更新通知が効かず、古いまま放置されてハッキング被害に遭うリスクがあります。Kashiwazaki SEO ControlPanel は、作者が公開する単一のマニフェスト（全 wp- プラグイン/テーマの最新版情報をまとめた JSON）を取得し、ローカルに導入済みのバージョンが古い場合に管理画面とメールで警告します。マニフェストは 1 ファイルの取得だけで完結するため、アクセストークンは不要で、API レート制限の影響も受けません。
+
+主な機能:
+
+* マニフェストに基づく wp- 付きプラグイン/テーマの監視（本体を最上位に固定）
+* インストール済みバージョンと最新版の差分照合（インストール名と公開名の表記揺れを吸収）
+* セキュリティ更新の強調表示
+* メール通知（セキュリティ更新は優先即時）
+* wp-cron による定期チェック
+* タブ式コントロールパネル（更新一覧・ニュース・設定・診断）
+* WordPress ダッシュボードへの控えめな更新サマリ表示
+* 本プラグイン自身の自己更新
+* 作者ニュース最新6件の表示
+* マニフェスト取得結果の Transient キャッシュ（取得失敗時も直前の良好データを保持）
+* 外部通信の開示とニュース取得の無効化トグル
+
+本バージョンは更新の「検知・通知・GitHub への誘導」までを行います。監視対象プラグイン/テーマの自動更新は行いません（本体自身の更新を除く）。
+
+== Changelog ==
+
+= 1.0.0 =
+* 初版リリース。
