@@ -98,13 +98,38 @@ class KSCP_Update_Checker {
 
 			$status   = $this->resolve_status( $installed_version, $latest_version );
 			$extra_kw = ( ! empty( $t['severity_keywords'] ) && is_array( $t['severity_keywords'] ) ) ? $t['severity_keywords'] : array();
-			// セキュリティ判定: マニフェストの明示フラグ優先、無ければ changelog/version から推定。
-			$is_sec = false;
+
+			// 更新タイプ（security / bug / update）。1 更新が複数タイプを持ちうる。
+			// 導入版〜最新版の間に含まれる各バージョンのタイプを合成する。
+			$types = array();
 			if ( 'update-available' === $status ) {
-				$is_sec = ! empty( $t['is_security'] )
-					? true
-					: $this->is_security_update( $changelog . ' ' . $latest_version, $extra_kw );
+				$versions = ( isset( $t['versions'] ) && is_array( $t['versions'] ) ) ? $t['versions'] : array();
+				if ( ! empty( $versions ) ) {
+					if ( '' !== $installed_version ) {
+						foreach ( $versions as $ver ) {
+							// 導入版より新しいバージョン（＝今回の更新に含まれる）のタイプを採用。
+							if ( ! empty( $ver['version'] ) && ! empty( $ver['types'] ) && is_array( $ver['types'] )
+								&& version_compare( $ver['version'], $installed_version, '>' ) ) {
+								$types = array_merge( $types, $ver['types'] );
+							}
+						}
+					}
+					// 導入版不明、または一致なし → 最新バージョンのタイプで代替。
+					if ( empty( $types ) && ! empty( $versions[0]['types'] ) && is_array( $versions[0]['types'] ) ) {
+						$types = $versions[0]['types'];
+					}
+				}
+				// versions が無い旧マニフェスト向けフォールバック。
+				if ( empty( $types ) ) {
+					$fallback_sec = ! empty( $t['is_security'] )
+						|| $this->is_security_update( $changelog . ' ' . $latest_version, $extra_kw );
+					$types[] = $fallback_sec ? 'security' : 'update';
+				}
+				// 表示順を security > bug > update に正規化。
+				$order = array( 'security', 'bug', 'update' );
+				$types = array_values( array_intersect( $order, array_unique( $types ) ) );
 			}
+			$is_sec = in_array( 'security', $types, true );
 
 			$items[] = array(
 				'slug'              => $slug,
@@ -117,6 +142,7 @@ class KSCP_Update_Checker {
 				'version_source'    => 'manifest',
 				'status'            => $status,
 				'is_security'       => $is_sec,
+				'update_types'      => $types,
 				'changelog'         => $this->trim_changelog( $changelog ),
 				'last_updated'      => isset( $t['last_updated'] ) ? $t['last_updated'] : '',
 				'html_url'          => isset( $t['html_url'] ) ? $t['html_url'] : '',
@@ -167,21 +193,70 @@ class KSCP_Update_Checker {
 		}
 		$updates  = 0;
 		$security = 0;
+		$bug      = 0;
+		$feature  = 0;
 		$total    = 0;
 		foreach ( $status['items'] as $it ) {
 			$total++;
 			if ( 'update-available' === $it['status'] ) {
 				$updates++;
-				if ( ! empty( $it['is_security'] ) ) {
+				$types = isset( $it['update_types'] ) && is_array( $it['update_types'] ) ? $it['update_types'] : array();
+				if ( in_array( 'security', $types, true ) || ! empty( $it['is_security'] ) ) {
 					$security++;
+				}
+				if ( in_array( 'bug', $types, true ) ) {
+					$bug++;
+				}
+				if ( in_array( 'update', $types, true ) ) {
+					$feature++;
 				}
 			}
 		}
 		return array(
 			'updates'  => $updates,
 			'security' => $security,
+			'bug'      => $bug,
+			'feature'  => $feature,
 			'total'    => $total,
 		);
+	}
+
+	/**
+	 * 更新タイプの表示メタ（順序・ラベル・CSS 修飾子）を返す共有ヘルパー。
+	 * 1 更新が複数タイプを持つ場合、security > bug > update の順で返す。
+	 *
+	 * @param array $item ステータス項目。
+	 * @return array 各要素 {key, label, short, mod}。
+	 */
+	public static function update_type_badges( $item ) {
+		$types = ( isset( $item['update_types'] ) && is_array( $item['update_types'] ) ) ? $item['update_types'] : array();
+		if ( empty( $types ) ) {
+			$types = ! empty( $item['is_security'] ) ? array( 'security' ) : array( 'update' );
+		}
+		$meta = array(
+			'security' => array(
+				'label' => __( 'セキュリティ', 'kashiwazaki-seo-control-panel' ),
+				'short' => __( 'セキュリティ', 'kashiwazaki-seo-control-panel' ),
+				'mod'   => 'security',
+			),
+			'bug'      => array(
+				'label' => __( 'バグ修正', 'kashiwazaki-seo-control-panel' ),
+				'short' => __( 'バグ修正', 'kashiwazaki-seo-control-panel' ),
+				'mod'   => 'bug',
+			),
+			'update'   => array(
+				'label' => __( '機能', 'kashiwazaki-seo-control-panel' ),
+				'short' => __( '機能', 'kashiwazaki-seo-control-panel' ),
+				'mod'   => 'update',
+			),
+		);
+		$out = array();
+		foreach ( array( 'security', 'bug', 'update' ) as $k ) {
+			if ( in_array( $k, $types, true ) ) {
+				$out[] = array( 'key' => $k ) + $meta[ $k ];
+			}
+		}
+		return $out;
 	}
 
 	/**
@@ -306,8 +381,15 @@ class KSCP_Update_Checker {
 	 */
 	private function trim_changelog( $body ) {
 		$body = (string) $body;
-		if ( strlen( $body ) > 4000 ) {
-			$body = substr( $body, 0, 4000 ) . "\n…";
+		// 保存ステータスは表示に changelog を使わないため短い抜粋のみ保持する。
+		// 全文（監視対象 47 件 × 数 KB）を保存すると options 行が肥大化し、
+		// 共有ホストの書き込み上限超過で update_option が失敗する不具合を防ぐ。
+		if ( function_exists( 'mb_substr' ) ) {
+			if ( mb_strlen( $body ) > 200 ) {
+				$body = mb_substr( $body, 0, 200 ) . '…';
+			}
+		} elseif ( strlen( $body ) > 200 ) {
+			$body = substr( $body, 0, 200 ) . '…';
 		}
 		return $body;
 	}

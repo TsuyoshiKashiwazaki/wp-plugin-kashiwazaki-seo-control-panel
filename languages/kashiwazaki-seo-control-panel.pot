@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-30T08:13:42+00:00\n"
+"POT-Creation-Date: 2026-07-01T09:18:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: kashiwazaki-seo-control-panel\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: wp-plugin-kashiwazaki-seo-control-panel.php
 #: admin/class-kscp-admin.php:50
 #: admin/class-kscp-admin.php:51
-#: admin/class-kscp-admin.php:102
+#: admin/class-kscp-admin.php:106
 #: admin/views/header.php:26
 msgid "Kashiwazaki SEO ControlPanel"
 msgstr ""
@@ -48,43 +48,61 @@ msgstr ""
 msgid "設定"
 msgstr ""
 
-#: admin/class-kscp-admin.php:117
-msgid "まだチェックを実行していません。"
+#: admin/class-kscp-admin.php:134
+msgid "まだチェックしていません"
 msgstr ""
 
-#. translators: %d: number of updates
-#: admin/class-kscp-admin.php:122
+#: admin/class-kscp-admin.php:135
+msgid "最新状況を確認しましょう"
+msgstr ""
+
+#: admin/class-kscp-admin.php:140
+msgid "すべて最新です"
+msgstr ""
+
+#. translators: %d: number of monitored items
+#: admin/class-kscp-admin.php:143
 #, php-format
-msgid "%d 件の更新があります。"
-msgid_plural "%d 件の更新があります。"
-msgstr[0] ""
-msgstr[1] ""
+msgid "監視対象 %d 件をチェック済み"
+msgstr ""
+
+#: admin/class-kscp-admin.php:150
+msgid "件の更新があります"
+msgstr ""
 
 #. translators: %d: number of security updates
-#: admin/class-kscp-admin.php:129
+#: admin/class-kscp-admin.php:154
 #, php-format
-msgid "（うちセキュリティ %d 件）"
+msgid "セキュリティ %d 件"
 msgstr ""
 
-#: admin/class-kscp-admin.php:136
-msgid "すべて最新です。"
+#. translators: %d: number of monitored items
+#: admin/class-kscp-admin.php:160
+#, php-format
+msgid "監視対象 %d 件中"
 msgstr ""
 
-#: admin/class-kscp-admin.php:138
+#. translators: %d: number of additional updatable items
+#: admin/class-kscp-admin.php:199
+#, php-format
+msgid "ほか %d 件"
+msgstr ""
+
+#: admin/class-kscp-admin.php:206
 msgid "コントロールパネルを開く"
 msgstr ""
 
-#: admin/class-kscp-admin.php:147
-#: admin/class-kscp-admin.php:170
-#: admin/class-kscp-admin.php:219
+#: admin/class-kscp-admin.php:215
+#: admin/class-kscp-admin.php:238
+#: admin/class-kscp-admin.php:287
 msgid "権限がありません。"
 msgstr ""
 
-#: admin/class-kscp-admin.php:271
+#: admin/class-kscp-admin.php:339
 msgid "設定を保存しました。"
 msgstr ""
 
-#: admin/class-kscp-admin.php:272
+#: admin/class-kscp-admin.php:340
 msgid "最新情報を再取得しました。"
 msgstr ""
 
@@ -167,104 +185,73 @@ msgstr ""
 msgid "ニュースを取得できませんでした。時間をおいて再度お試しください。"
 msgstr ""
 
-#: admin/views/tab-overview.php:18
-msgid "更新あり"
-msgstr ""
-
-#: admin/views/tab-overview.php:19
+#: admin/views/tab-overview.php:43
 msgid "最新"
 msgstr ""
 
-#: admin/views/tab-overview.php:20
+#: admin/views/tab-overview.php:44
 #: includes/class-kscp-notifier.php:151
 msgid "未インストール"
 msgstr ""
 
-#: admin/views/tab-overview.php:21
+#: admin/views/tab-overview.php:45
 msgid "取得失敗"
 msgstr ""
 
-#: admin/views/tab-overview.php:26
-#, php-format
-msgid "更新あり: %d"
-msgstr ""
-
-#: admin/views/tab-overview.php:27
-#, php-format
-msgid "セキュリティ: %d"
-msgstr ""
-
-#: admin/views/tab-overview.php:28
-#, php-format
-msgid "監視対象: %d"
-msgstr ""
-
-#: admin/views/tab-overview.php:33
-msgid "今すぐチェック"
-msgstr ""
-
-#. translators: %s: datetime
-#: admin/views/tab-overview.php:41
-#, php-format
-msgid "最終チェック: %s"
-msgstr ""
-
-#: admin/views/tab-overview.php:50
-msgid "まだチェックを実行していません。「今すぐチェック」を押してください。"
-msgstr ""
-
-#: admin/views/tab-overview.php:55
-msgid "名前"
-msgstr ""
-
-#: admin/views/tab-overview.php:56
-msgid "種別"
-msgstr ""
-
-#: admin/views/tab-overview.php:57
-msgid "導入済み"
+#: admin/views/tab-overview.php:54
+msgid "更新あり"
 msgstr ""
 
 #: admin/views/tab-overview.php:58
-msgid "最新版"
+#: includes/class-kscp-update-checker.php:238
+#: includes/class-kscp-update-checker.php:239
+msgid "セキュリティ"
 msgstr ""
 
-#: admin/views/tab-overview.php:59
+#: admin/views/tab-overview.php:62
+msgid "監視対象"
+msgstr ""
+
+#. translators: %s: datetime
+#: admin/views/tab-overview.php:70
+#, php-format
+msgid "最終チェック %s"
+msgstr ""
+
+#: admin/views/tab-overview.php:81
+msgid "今すぐチェック"
+msgstr ""
+
+#: admin/views/tab-overview.php:88
+msgid "まだチェックを実行していません。「今すぐチェック」を押してください。"
+msgstr ""
+
+#: admin/views/tab-overview.php:93
+msgid "名前"
+msgstr ""
+
+#: admin/views/tab-overview.php:94
+msgid "バージョン"
+msgstr ""
+
+#: admin/views/tab-overview.php:95
+msgid "状態"
+msgstr ""
+
+#: admin/views/tab-overview.php:96
 msgid "最終更新日"
 msgstr ""
 
-#: admin/views/tab-overview.php:60
-msgid "ステータス"
-msgstr ""
-
-#: admin/views/tab-overview.php:61
-msgid "詳細"
-msgstr ""
-
-#: admin/views/tab-overview.php:79
+#: admin/views/tab-overview.php:118
 msgid "本体"
 msgstr ""
 
-#: admin/views/tab-overview.php:82
-msgid "⚠ セキュリティ"
-msgstr ""
-
-#: admin/views/tab-overview.php:86
-#: includes/class-kscp-notifier.php:148
-msgid "テーマ"
-msgstr ""
-
-#: admin/views/tab-overview.php:86
-#: includes/class-kscp-notifier.php:149
-msgid "プラグイン"
-msgstr ""
-
-#: admin/views/tab-overview.php:103
+#: admin/views/tab-overview.php:157
 msgid "GitHub で見る"
 msgstr ""
 
-#: admin/views/tab-overview.php:114
-msgid "※ 本バージョンは更新の検知・通知・GitHub への誘導までを行います。監視対象の自動更新は行いません（本体 Kashiwazaki SEO ControlPanel 自身の更新を除く）。"
+#: admin/views/tab-overview.php:167
+msgid "※ 状態欄の色は更新の種類を表します（赤=セキュリティ / 黄=バグ修正 / 青=機能）。本バージョンは検知・通知・GitHub への誘導を行い、監視対象の自動更新は行いません（本体自身の更新を除く）。"
 msgstr ""
 
 #: admin/views/tab-settings.php:15
@@ -382,6 +369,14 @@ msgstr ""
 msgid "%s で監視中のプラグイン/テーマに更新が見つかりました。"
 msgstr ""
 
+#: includes/class-kscp-notifier.php:148
+msgid "テーマ"
+msgstr ""
+
+#: includes/class-kscp-notifier.php:149
+msgid "プラグイン"
+msgstr ""
+
 #: includes/class-kscp-notifier.php:150
 msgid "【セキュリティ】 "
 msgstr ""
@@ -410,4 +405,14 @@ msgstr ""
 
 #: includes/class-kscp-self-updater.php:191
 msgid "更新ファイルのフォルダ名修正に失敗しました。"
+msgstr ""
+
+#: includes/class-kscp-update-checker.php:243
+#: includes/class-kscp-update-checker.php:244
+msgid "バグ修正"
+msgstr ""
+
+#: includes/class-kscp-update-checker.php:248
+#: includes/class-kscp-update-checker.php:249
+msgid "機能"
 msgstr ""

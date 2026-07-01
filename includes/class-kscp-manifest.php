@@ -193,10 +193,56 @@ class KSCP_Manifest {
 			'last_updated'   => isset( $raw['last_updated'] ) ? sanitize_text_field( $raw['last_updated'] ) : '',
 			'changelog'      => isset( $raw['changelog'] ) ? $this->clean_text( $raw['changelog'] ) : '',
 			'is_security'    => ! empty( $raw['is_security'] ),
+			'versions'       => $this->sanitize_versions( isset( $raw['versions'] ) ? $raw['versions'] : array() ),
 			'html_url'       => isset( $raw['html_url'] ) ? esc_url_raw( $raw['html_url'] ) : '',
 			'download_url'   => isset( $raw['download_url'] ) ? esc_url_raw( $raw['download_url'] ) : '',
 		);
 		return $entry;
+	}
+
+	/**
+	 * バージョン別タイプ一覧を検証（version + types[security|bug|update]）。
+	 *
+	 * @param mixed $raw 生データ。
+	 * @return array
+	 */
+	private function sanitize_versions( $raw ) {
+		if ( ! is_array( $raw ) ) {
+			return array();
+		}
+		$allowed = array( 'security', 'bug', 'update' );
+		$out     = array();
+		foreach ( $raw as $v ) {
+			if ( ! is_array( $v ) || empty( $v['version'] ) ) {
+				continue;
+			}
+			$ver = $this->clean_version( $v['version'] );
+			if ( '' === $ver ) {
+				continue;
+			}
+			$types = array();
+			if ( ! empty( $v['types'] ) && is_array( $v['types'] ) ) {
+				foreach ( $v['types'] as $t ) {
+					if ( in_array( (string) $t, $allowed, true ) ) {
+						$types[] = (string) $t;
+					}
+				}
+			}
+			$types = array_values( array_unique( $types ) );
+			if ( empty( $types ) ) {
+				$types = array( 'update' );
+			}
+			$out[] = array(
+				'version' => $ver,
+				'types'   => $types,
+			);
+			// 上限は実在の CHANGELOG を十分カバーする大きさ（古い導入版からの
+			// スパン合成でセキュリティを取りこぼさないため）。
+			if ( count( $out ) >= 100 ) {
+				break;
+			}
+		}
+		return $out;
 	}
 
 	/**
@@ -219,8 +265,16 @@ class KSCP_Manifest {
 	 */
 	private function clean_text( $t ) {
 		$t = (string) $t;
-		if ( strlen( $t ) > 4000 ) {
-			$t = substr( $t, 0, 4000 ) . "\n…";
+		// 監視対象全件ぶんのマニフェストを 1 つの transient に収める必要があるため、
+		// changelog は要約サイズに抑える（全文 × 全件だと options 書き込み上限を超えて
+		// キャッシュ保存に失敗し、毎回リモート再取得になる）。
+		$limit = 600;
+		if ( function_exists( 'mb_substr' ) ) {
+			if ( mb_strlen( $t ) > $limit ) {
+				$t = mb_substr( $t, 0, $limit ) . "\n…";
+			}
+		} elseif ( strlen( $t ) > $limit ) {
+			$t = substr( $t, 0, $limit ) . "\n…";
 		}
 		return $t;
 	}

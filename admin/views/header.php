@@ -27,6 +27,10 @@ $kscp_notice = isset( $_GET['notice'] ) ? sanitize_key( wp_unslash( $_GET['notic
 		<span class="kscp-ver">v<?php echo esc_html( KSCP_VERSION ); ?></span>
 	</h1>
 
+	<p class="kscp-lead">
+		<?php echo esc_html__( '柏崎剛が公開する GitHub 上の wp- プラグイン/テーマの最新版を監視し、更新情報をお届けするプラグインです。インストール済みのバージョンが古くなると、この画面とメールでお知らせします。', 'kashiwazaki-seo-control-panel' ); ?>
+	</p>
+
 	<?php
 	if ( $kscp_notice ) {
 		KSCP_Admin::render_notice( $kscp_notice );

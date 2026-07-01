@@ -1,6 +1,6 @@
 # Kashiwazaki SEO ControlPanel
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
 ![License](https://img.shields.io/badge/license-GPLv2%2B-green.svg)
 
 柏崎剛が公開する `wp-` 付きプラグイン/テーマの最新版を**単一のマニフェスト**から取得し、インストール済みのバージョンが古い場合に管理画面とメールで通知する、作者専用のコントロールパネルです。**アクセストークンは不要**で、API レート制限の影響も受けません。本プラグイン自身の自己更新にも対応します。

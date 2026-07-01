@@ -82,11 +82,15 @@ class KSCP_Admin {
 		if ( false === strpos( $hook, KSCP_MENU_SLUG ) && 'index.php' !== $hook ) {
 			return;
 		}
+		// バージョンはファイル更新時刻を使い、CSS 変更時に確実にキャッシュを破棄する
+		// （ブラウザ・CDN いずれも URL が変わるため過去 CSS を拾わない）。
+		$kscp_css_path = KSCP_PLUGIN_DIR . 'assets/css/admin.css';
+		$kscp_css_ver  = file_exists( $kscp_css_path ) ? (string) filemtime( $kscp_css_path ) : KSCP_VERSION;
 		wp_enqueue_style(
 			'kscp-admin',
 			KSCP_PLUGIN_URL . 'assets/css/admin.css',
 			array(),
-			KSCP_VERSION
+			$kscp_css_ver
 		);
 	}
 
@@ -113,6 +117,8 @@ class KSCP_Admin {
 		$panel    = esc_url( admin_url( 'admin.php?page=' . KSCP_MENU_SLUG ) );
 		$updates  = (int) $summary['updates'];
 		$security = (int) $summary['security'];
+		$bug      = (int) $summary['bug'];
+		$feature  = (int) $summary['feature'];
 
 		if ( empty( $status['items'] ) ) {
 			$state = 'idle';
@@ -123,6 +129,8 @@ class KSCP_Admin {
 		}
 
 		echo '<div class="kscp-dw kscp-dw--' . esc_attr( $state ) . '">';
+
+		echo '<p class="kscp-dw-lead">' . esc_html__( '柏崎剛が公開する GitHub 上の wp- プラグイン/テーマの更新情報をお届けします。', 'kashiwazaki-seo-control-panel' ) . '</p>';
 
 		if ( 'idle' === $state ) {
 			echo '<div class="kscp-dw-hero">';
@@ -144,12 +152,30 @@ class KSCP_Admin {
 			echo '<div class="kscp-dw-hero">';
 			echo '<span class="kscp-dw-num">' . esc_html( number_format_i18n( $updates ) ) . '</span>';
 			echo '<div class="kscp-dw-text"><span class="kscp-dw-title">' . esc_html__( '件の更新があります', 'kashiwazaki-seo-control-panel' ) . '</span>';
-			if ( $security > 0 ) {
-				echo '<span class="kscp-dw-badge"><span class="dashicons dashicons-shield-alt"></span>' . sprintf(
-					/* translators: %d: number of security updates */
-					esc_html__( 'セキュリティ %d 件', 'kashiwazaki-seo-control-panel' ),
-					$security
-				) . '</span>';
+			if ( $security > 0 || $bug > 0 || $feature > 0 ) {
+				echo '<span class="kscp-dw-badges">';
+				if ( $security > 0 ) {
+					echo '<span class="kscp-dw-badge kscp-dw-badge--security"><span class="dashicons dashicons-shield-alt"></span>' . sprintf(
+						/* translators: %d: number of security updates */
+						esc_html__( 'セキュリティ %d 件', 'kashiwazaki-seo-control-panel' ),
+						$security
+					) . '</span>';
+				}
+				if ( $bug > 0 ) {
+					echo '<span class="kscp-dw-badge kscp-dw-badge--bug"><span class="dashicons dashicons-hammer"></span>' . sprintf(
+						/* translators: %d: number of bug-fix updates */
+						esc_html__( 'バグ修正 %d 件', 'kashiwazaki-seo-control-panel' ),
+						$bug
+					) . '</span>';
+				}
+				if ( $feature > 0 ) {
+					echo '<span class="kscp-dw-badge kscp-dw-badge--update"><span class="dashicons dashicons-admin-plugins"></span>' . sprintf(
+						/* translators: %d: number of feature updates */
+						esc_html__( '機能 %d 件', 'kashiwazaki-seo-control-panel' ),
+						$feature
+					) . '</span>';
+				}
+				echo '</span>';
 			} else {
 				echo '<span class="kscp-dw-sub">' . sprintf(
 					/* translators: %d: number of monitored items */
@@ -173,13 +199,14 @@ class KSCP_Admin {
 				$kscp_ups  = array_slice( $kscp_ups, 0, $kscp_max );
 				echo '<ul class="kscp-dw-list">';
 				foreach ( $kscp_ups as $kscp_it ) {
-					$kscp_sec  = ! empty( $kscp_it['is_security'] );
-					$kscp_dot  = $kscp_sec ? 'kscp-dw-dot--sec' : '';
+					$kscp_badges = KSCP_Update_Checker::update_type_badges( $kscp_it );
+					$kscp_dot    = ( ! empty( $kscp_badges[0] ) ) ? 'kscp-dw-dot--' . $kscp_badges[0]['mod'] : 'kscp-dw-dot--update';
 					echo '<li class="kscp-dw-item">';
 					echo '<span class="kscp-dw-dot ' . esc_attr( $kscp_dot ) . '"></span>';
-					echo '<span class="kscp-dw-name">' . esc_html( $kscp_it['name'] );
-					if ( $kscp_sec ) {
-						echo ' <span class="kscp-dw-tag">' . esc_html__( 'セキュリティ', 'kashiwazaki-seo-control-panel' ) . '</span>';
+					echo '<span class="kscp-dw-name">' . esc_html( $kscp_it['name'] ) . '</span>';
+					echo '<span class="kscp-dw-tags">';
+					foreach ( $kscp_badges as $kscp_badge ) {
+						echo '<span class="kscp-dw-tag kscp-dw-tag--' . esc_attr( $kscp_badge['mod'] ) . '">' . esc_html( $kscp_badge['short'] ) . '</span>';
 					}
 					echo '</span>';
 					$kscp_from = ( '' !== $kscp_it['installed_version'] ) ? $kscp_it['installed_version'] : '—';

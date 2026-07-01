@@ -3,7 +3,7 @@
  * Plugin Name:       Kashiwazaki SEO ControlPanel
  * Plugin URI:        https://www.tsuyoshikashiwazaki.jp
  * Description:       柏崎剛が公開する wp- 付きプラグイン/テーマの最新版を単一マニフェストから取得し、インストール済みバージョンが古い場合に管理画面とメールで通知する作者専用コントロールパネル。アクセストークン不要。本プラグイン自身の自己更新にも対応。
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.8
  * Requires PHP:      7.2
  * Author:            柏崎剛 (Tsuyoshi Kashiwazaki)
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ---------------------------------------------------------------------------
 // 定数定義
 // ---------------------------------------------------------------------------
-define( 'KSCP_VERSION', '1.0.0' );
+define( 'KSCP_VERSION', '1.0.1' );
 define( 'KSCP_PLUGIN_FILE', __FILE__ );
 define( 'KSCP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'KSCP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
