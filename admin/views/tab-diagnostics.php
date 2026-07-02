@@ -67,10 +67,10 @@ $kscp_next = wp_next_scheduled( KSCP_CRON_HOOK );
 	<?php echo esc_html__( '本プラグインは GitHub API を個別に呼び出さず、作者が公開する単一のマニフェスト（4時間ごとに自動更新）を取得して最新版を判定します。アクセストークンは不要です。', 'kashiwazaki-seo-control-panel' ); ?>
 </p>
 
-<p class="kscp-diag-actions">
+<div class="kscp-diag-actions">
 	<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 		<input type="hidden" name="action" value="kscp_recheck" />
 		<?php wp_nonce_field( 'kscp_recheck' ); ?>
 		<button type="submit" class="button button-primary"><?php echo esc_html__( 'マニフェストを再取得して再チェック', 'kashiwazaki-seo-control-panel' ); ?></button>
 	</form>
-</p>
+</div>

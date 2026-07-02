@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新一覧と更新の種類 - SEO ControlPanel マニュアル</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button class="hamburger-btn" aria-label="メニューを開く">&#9776;</button>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2 style="color:#fff;">SEO ControlPanel</h2>
+            <span class="version">v1.0.2</span>
+            <img src="images/main-visual.png" alt="" style="width:100%;border-radius:4px;margin-top:8px;">
+        </div>
+        <ul>
+            <li><a href="index.html">概要</a></li>
+            <li><a href="setup.html">インストール・初期設定</a></li>
+            <li><a href="updates.html">更新一覧と更新の種類</a></li>
+            <li><a href="notifications.html">通知（メール・ダッシュボード）</a></li>
+            <li><a href="news.html">作者ニュース</a></li>
+            <li><a href="troubleshooting.html">トラブルシューティング</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <h1>更新一覧と更新の種類</h1>
+        <p class="lead">「更新一覧」タブは本プラグインの中心画面です。監視対象の状態が一目でわかる統計タイルと、更新の種類が色分けされた一覧テーブルの見方を解説します。</p>
+
+        <section>
+            <h2>画面の構成</h2>
+            <figure class="screenshot">
+                <img src="images/screenshots/01-overview.png" alt="更新一覧タブ: 統計タイルと監視対象の一覧テーブル" class="lightbox-trigger">
+                <figcaption>図: 更新一覧タブ（統計タイル＋一覧テーブル）</figcaption>
+            </figure>
+
+            <h3>統計タイル</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:35%;">タイル</th>
+                        <th>意味</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>更新あり</td><td>新しいバージョンが公開されている項目の数</td></tr>
+                    <tr><td>セキュリティ</td><td>更新のうち、セキュリティ修正を含む項目の数（赤で強調）</td></tr>
+                    <tr><td>監視対象</td><td>マニフェストに含まれる監視対象の総数</td></tr>
+                </tbody>
+            </table>
+            <p>タイルの右側には最終チェック日時と「今すぐチェック」ボタンが表示されます。「今すぐチェック」はマニフェストを強制再取得して照合をやり直します。</p>
+        </section>
+
+        <section>
+            <h2>一覧テーブルの見方</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:25%;">列</th>
+                        <th>内容</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>名前</td><td>プラグイン/テーマ名と slug。アイコンはプラグイン（プラグ）とテーマ（ピン）で異なります。本プラグイン自身には「本体」バッジが付き、常に先頭に表示されます</td></tr>
+                    <tr><td>バージョン</td><td>更新がある場合は「<s>現在の版</s> &rsaquo; <strong>最新版</strong>」の遷移表示。最新の場合は現在の版のみ</td></tr>
+                    <tr><td>有効化</td><td>「有効」または「無効」（インストール済みで停止中）</td></tr>
+                    <tr><td>更新のお知らせ</td><td>更新がある場合は種類チップ（下記 3 分類）。最新なら「最新」、マニフェストから情報を取得できない場合は「取得失敗」</td></tr>
+                    <tr><td>最新版の公開日</td><td>マニフェスト上の最新バージョンが公開された日付</td></tr>
+                    <tr><td>（右端のアイコン）</td><td>該当リポジトリの GitHub ページを開くリンク</td></tr>
+                </tbody>
+            </table>
+            <p>行の並び順は「本体 → セキュリティ更新 → その他の更新 → 最新」です。更新がある行には左端に色付きのアクセントが付きます（セキュリティ=赤、その他の更新=黄）。</p>
+            <p>一覧は「インストール済み」と「未インストール」の 2 ブロックに分かれています。「未インストール」ブロックには、このサイトにまだ導入していない公開プラグイン/テーマが名前・最新版・公開日・GitHub リンクのみで表示されます（導入は任意。更新のお知らせの対象外です）。</p>
+        </section>
+
+        <section>
+            <h2>更新の種類（3 分類）</h2>
+            <p>更新がある項目の「更新のお知らせ」列には、その更新に含まれる内容の種類がチップで表示されます。1 つの更新に複数の種類が含まれる場合は、該当するチップがすべて表示されます。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:25%;">チップ</th>
+                        <th style="width:15%;">色</th>
+                        <th>意味</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>セキュリティ</td><td>赤</td><td>脆弱性の修正などセキュリティに関わる更新。最優先で適用を検討してください</td></tr>
+                    <tr><td>バグ修正</td><td>黄</td><td>不具合の修正を含む更新</td></tr>
+                    <tr><td>機能</td><td>青</td><td>機能追加・変更を含む更新</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout-note">
+                <p>種類の判定は「いま導入しているバージョンから最新版までの間に公開された<strong>すべてのバージョンの更新内容</strong>」をもとに行われます。たとえば 1.0.1 を使っていて最新が 1.0.6 の場合、1.0.2〜1.0.6 のどれか 1 つにでもセキュリティ修正が含まれていれば「セキュリティ」チップが表示されます。</p>
+            </div>
+
+            <figure class="infographic">
+                <img src="images/infographics/update-types.png" alt="更新の 3 分類（セキュリティ・バグ修正・機能）と、導入バージョンから最新版までの範囲で判定される仕組みの図">
+                <figcaption>図: 更新の 3 分類と判定の仕組み</figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h2>本体の自己更新</h2>
+            <p>本プラグイン自身に新しいバージョンが公開されると、WordPress 標準のプラグイン更新（「プラグイン」画面の更新通知や「ダッシュボード &gt; 更新」）にそのまま表示され、ワンクリックで更新できます。更新パッケージの取得元は GitHub 系の配信ホストに限定されており、それ以外の URL からはダウンロードしない多重の安全対策が入っています。</p>
+            <div class="callout callout-warning">
+                <p>本プラグインが自動で更新するのは<strong>本体自身のみ</strong>です。監視対象の各プラグイン/テーマについては「検知・通知・GitHub への誘導」までを行い、自動更新はしません。各項目の更新は GitHub リンクから最新版を取得して適用してください。</p>
+            </div>
+        </section>
+
+        <nav class="page-nav">
+            <a href="setup.html" class="prev">&laquo; インストール・初期設定</a>
+            <a href="notifications.html" class="next">通知（メール・ダッシュボード） &raquo;</a>
+        </nav>
+
+        <footer class="manual-footer">
+            <p>作者: <a href="https://www.tsuyoshikashiwazaki.jp/profile/" target="_blank" rel="noopener">柏崎剛（Tsuyoshi Kashiwazaki）</a></p>
+            <p>プラグイン: Kashiwazaki SEO ControlPanel v1.0.2 | <a href="https://github.com/TsuyoshiKashiwazaki/wp-plugin-kashiwazaki-seo-control-panel" target="_blank" rel="noopener">GitHub</a></p>
+        </footer>
+    </main>
+
+    <div class="lightbox"></div>
+    <script src="js/manual.js"></script>
+</body>
+</html>

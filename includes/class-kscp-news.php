@@ -54,7 +54,9 @@ class KSCP_News {
 		}
 
 		$items = array_slice( $items, 0, self::COUNT );
-		set_transient( self::TRANSIENT, $items, 6 * HOUR_IN_SECONDS );
+		// 取得失敗（空）は一時障害の可能性が高いので短い TTL で再試行させる。
+		$ttl = empty( $items ) ? 10 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
+		set_transient( self::TRANSIENT, $items, $ttl );
 		return $items;
 	}
 

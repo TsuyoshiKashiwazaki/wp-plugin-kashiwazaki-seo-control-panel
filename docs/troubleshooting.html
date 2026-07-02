@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トラブルシューティング - SEO ControlPanel マニュアル</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button class="hamburger-btn" aria-label="メニューを開く">&#9776;</button>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2 style="color:#fff;">SEO ControlPanel</h2>
+            <span class="version">v1.0.2</span>
+            <img src="images/main-visual.png" alt="" style="width:100%;border-radius:4px;margin-top:8px;">
+        </div>
+        <ul>
+            <li><a href="index.html">概要</a></li>
+            <li><a href="setup.html">インストール・初期設定</a></li>
+            <li><a href="updates.html">更新一覧と更新の種類</a></li>
+            <li><a href="notifications.html">通知（メール・ダッシュボード）</a></li>
+            <li><a href="news.html">作者ニュース</a></li>
+            <li><a href="troubleshooting.html">トラブルシューティング</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <h1>トラブルシューティング</h1>
+        <p class="lead">よくある問題とその解決方法をまとめています。</p>
+
+        <section>
+            <h2>診断タブの使い方</h2>
+            <p>「診断」タブでは、マニフェストへの接続状態と自動チェックの予定を確認できます。問題が起きたときは、まずこの画面を確認してください。</p>
+            <figure class="screenshot">
+                <img src="images/screenshots/04-diagnostics.png" alt="診断タブ: マニフェスト URL・取得可否・生成日時・次回自動チェックの表示" class="lightbox-trigger">
+                <figcaption>図: 診断タブ（接続診断）</figcaption>
+            </figure>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:35%;">項目</th>
+                        <th>意味</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>マニフェスト URL</td><td>現在使用している監視データ源の URL</td></tr>
+                    <tr><td>マニフェスト取得</td><td>「正常（N 件）」なら接続 OK。失敗時はエラーコードが表示されます</td></tr>
+                    <tr><td>マニフェスト生成日時</td><td>マニフェスト自体が最後に生成された日時（約 4 時間ごとに自動更新）</td></tr>
+                    <tr><td>次回自動チェック</td><td>wp-cron による次回の自動チェック予定時刻</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>よくある問題と解決策</h2>
+
+            <h3>更新があるはずなのに一覧に表示されない</h3>
+            <p><strong>原因:</strong> マニフェスト側の反映待ち、またはキャッシュが残っています。</p>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-body">
+                    <p>「診断」タブの「マニフェスト生成日時」を確認します。マニフェストは約 4 時間ごとに自動生成されるため、公開直後の更新はまだ含まれていないことがあります。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-body">
+                    <p>「マニフェストを再取得して再チェック」ボタン（診断タブ）または「今すぐチェック」（更新一覧タブ）を押して、最新のマニフェストで照合し直します。</p>
+                </div>
+            </div>
+            <div class="callout callout-note">
+                <p>インストール名と公開名の表記揺れは自動で吸収されますが、「除外する slug」に登録した項目は一覧の対象外になります。設定も確認してください。</p>
+            </div>
+
+            <h3>メールが届かない</h3>
+            <p><strong>原因:</strong> 通知設定・送信環境・通知済み記録のいずれかによるものです。</p>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-body">
+                    <p>「通知・設定」タブで「メール通知」が ON になっているか、通知先メールアドレスが正しいかを確認します。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-body">
+                    <p>迷惑メールフォルダを確認します。サーバーからのメールが届きにくい場合は、SMTP 送信プラグインの利用を検討してください。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-body">
+                    <p>同じバージョンの更新は一度しか通知されません。「届かない」のではなく「通知済み」の可能性もあります。新しいバージョンが出たときに改めて通知されます。</p>
+                </div>
+            </div>
+
+            <h3>自動チェックが実行されない</h3>
+            <p><strong>原因:</strong> WordPress の予約実行（wp-cron）はサイトへのアクセスを契機に動くため、アクセスが少ないサイトでは予定時刻どおりに実行されないことがあります。</p>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-body">
+                    <p>「診断」タブの「次回自動チェック」に予定が表示されているか確認します。「未スケジュール」の場合は、プラグインを一度無効化して再度有効化すると再登録されます。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-body">
+                    <p><code>DISABLE_WP_CRON</code> を有効にしている環境では、サーバーの cron から <code>wp-cron.php</code> を定期実行する設定になっているか確認してください。</p>
+                </div>
+            </div>
+
+            <h3>マニフェスト取得が「取得できませんでした」になる</h3>
+            <p><strong>原因:</strong> 配信元（既定: raw.githubusercontent.com）への接続に失敗しています。</p>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-body">
+                    <p>サーバーから外部への HTTPS 通信が許可されているか（ファイアウォールやセキュリティプラグインの制限がないか）を確認します。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-body">
+                    <p>マニフェスト URL を独自に変更している場合は、URL が正しいか・HTTPS で到達できるかを確認します。空欄に戻すと既定の URL に戻ります。</p>
+                </div>
+            </div>
+            <div class="callout callout-tip">
+                <p>取得に失敗しても、前回正常に取得できたデータが保持されるため、一覧が突然空になることはありません。</p>
+            </div>
+
+            <h3>本体の自己更新が失敗する</h3>
+            <p><strong>原因:</strong> 更新パッケージの取得元制限、またはファイル書き込み権限の問題です。</p>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-body">
+                    <p>本体の更新パッケージは GitHub 系の配信ホストからのみダウンロードされます。セキュリティ製品などで github.com への接続を制限していないか確認してください。</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-body">
+                    <p><code>/wp-content/plugins/</code> に書き込み権限があるか確認します。失敗が続く場合は、GitHub から最新版の ZIP を取得して手動で上書きしてください。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>動作要件</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>要件</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>WordPress</td><td>5.8 以上</td></tr>
+                    <tr><td>PHP</td><td>7.2 以上</td></tr>
+                    <tr><td>PHP 拡張</td><td>特別な拡張は不要</td></tr>
+                    <tr><td>外部通信</td><td>マニフェスト配信元（既定 raw.githubusercontent.com）への HTTPS 接続</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>技術仕様</h2>
+            <ul>
+                <li><strong>データ保存:</strong> wp_options と transient のみ使用。カスタムテーブルは作成しません</li>
+                <li><strong>自動チェック:</strong> wp-cron のフック <code>kscp_scheduled_check</code>（毎時 / 6 時間ごと / 日次 / 週次）</li>
+                <li><strong>外部通信:</strong> マニフェスト JSON の取得（タイムアウト 15 秒・安全でない URL は拒否）と、作者サイトからのニュース取得（無効化可）。アクセストークン・個人情報は送信しません</li>
+                <li><strong>キャッシュ:</strong> マニフェストは設定値（既定 3 時間）、ニュースは 6 時間。取得失敗時は前回の良好データを保持</li>
+                <li><strong>自己更新の安全策:</strong> 更新パッケージは HTTPS かつ GitHub 系ホストのみ許可</li>
+                <li><strong>アンインストール:</strong> プラグインを削除すると、設定・チェック結果・通知履歴・キャッシュ・予約実行がすべて削除されます</li>
+            </ul>
+        </section>
+
+        <figure class="infographic">
+            <img src="images/infographics/architecture.png" alt="プラグインのアーキテクチャ: マニフェスト取得、照合、通知、自己更新、ニュース取得の構成図">
+            <figcaption>図: プラグインのアーキテクチャ</figcaption>
+        </figure>
+
+        <nav class="page-nav">
+            <a href="news.html" class="prev">&laquo; 作者ニュース</a>
+            <span></span>
+        </nav>
+
+        <footer class="manual-footer">
+            <p>作者: <a href="https://www.tsuyoshikashiwazaki.jp/profile/" target="_blank" rel="noopener">柏崎剛（Tsuyoshi Kashiwazaki）</a></p>
+            <p>プラグイン: Kashiwazaki SEO ControlPanel v1.0.2 | <a href="https://github.com/TsuyoshiKashiwazaki/wp-plugin-kashiwazaki-seo-control-panel" target="_blank" rel="noopener">GitHub</a></p>
+        </footer>
+    </main>
+
+    <div class="lightbox"></div>
+    <script src="js/manual.js"></script>
+</body>
+</html>

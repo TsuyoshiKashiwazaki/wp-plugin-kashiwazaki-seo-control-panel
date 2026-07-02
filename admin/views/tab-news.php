@@ -34,9 +34,10 @@ $kscp_news = $core->news->get_items();
 					alt="<?php echo esc_attr( $kscp_post['title'] ); ?>" loading="lazy" />
 			</a>
 			<div class="kscp-news-body">
-				<?php if ( ! empty( $kscp_post['date'] ) ) : ?>
+				<?php $kscp_news_ts = ! empty( $kscp_post['date'] ) ? strtotime( $kscp_post['date'] ) : false; ?>
+				<?php if ( false !== $kscp_news_ts ) : // 日付が解釈不能な場合は 1970-01-01 を出さず非表示にする（正当な epoch 日時は表示）。 ?>
 					<time class="kscp-news-date" datetime="<?php echo esc_attr( $kscp_post['date'] ); ?>">
-						<?php echo esc_html( wp_date( 'Y-m-d', strtotime( $kscp_post['date'] ) ) ); ?>
+						<?php echo esc_html( wp_date( 'Y-m-d', $kscp_news_ts ) ); ?>
 					</time>
 				<?php endif; ?>
 				<h3 class="kscp-news-title">

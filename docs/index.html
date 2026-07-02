@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>概要 - SEO ControlPanel マニュアル</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button class="hamburger-btn" aria-label="メニューを開く">&#9776;</button>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2 style="color:#fff;">SEO ControlPanel</h2>
+            <span class="version">v1.0.2</span>
+            <img src="images/main-visual.png" alt="" style="width:100%;border-radius:4px;margin-top:8px;">
+        </div>
+        <ul>
+            <li><a href="index.html">概要</a></li>
+            <li><a href="setup.html">インストール・初期設定</a></li>
+            <li><a href="updates.html">更新一覧と更新の種類</a></li>
+            <li><a href="notifications.html">通知（メール・ダッシュボード）</a></li>
+            <li><a href="news.html">作者ニュース</a></li>
+            <li><a href="troubleshooting.html">トラブルシューティング</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <h1>Kashiwazaki SEO ControlPanel マニュアル</h1>
+        <img src="images/main-visual.png" alt="SEO ControlPanel メインビジュアル" style="width:100%; border-radius:8px; margin-bottom:24px;">
+        <p class="lead">柏崎剛が GitHub で公開する <code>wp-</code> 付きプラグイン/テーマの最新版を単一のマニフェストから取得し、インストール済みのバージョンが古い場合に管理画面とメールで通知する、作者専用のコントロールパネルです。アクセストークンは不要で、本プラグイン自身の自己更新にも対応します。</p>
+
+        <p>WordPress 公式ディレクトリに申請していないプラグイン/テーマは、標準の自動更新通知が届きません。そのため古いバージョンのまま放置されやすく、脆弱性を抱えたままになるリスクがあります。本プラグインは、作者が公開する単一のマニフェスト（全 <code>wp-</code> プラグイン/テーマの最新版情報をまとめた JSON）を 1 ファイル取得するだけで、サイトに導入済みのプラグイン/テーマの更新有無をまとめてチェックします。GitHub API を個別に呼び出さないため、アクセストークンの設定や API レート制限の心配はありません。</p>
+
+        <section>
+            <h2>主要機能</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <h3>更新監視</h3>
+                    <p>導入済みの wp- 付きプラグイン/テーマとマニフェストの最新版を照合し、更新の有無を一覧表示。更新内容を「セキュリティ / バグ修正 / 機能」の 3 種類に分類して表示します。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>通知</h3>
+                    <p>更新を検知すると管理画面のダッシュボードとメールでお知らせ。セキュリティ更新は強調表示され、優先して即時にメール通知できます。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>自己更新</h3>
+                    <p>本プラグイン自身の新バージョンも検知し、WordPress 標準のプラグイン更新フローでそのまま更新できます。作者の最新ニュースも管理画面で確認できます。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>SEO / GEO における強み</h2>
+            <p><strong>SEO の観点:</strong> 古いプラグイン/テーマの放置は、脆弱性を突かれたサイト改ざんやスパム注入の原因となり、検索評価に深刻な悪影響を及ぼす場合があります。本プラグインは公式ディレクトリ未申請のプラグイン/テーマにも更新通知の仕組みを提供し、とくにセキュリティ更新を強調・優先通知することで、こうしたリスクを早期に把握する助けになります。</p>
+            <p><strong>GEO（生成エンジン最適化）の観点:</strong> AI 検索・生成エンジンに正しく参照されるためには、サイトが改ざんされず健全な状態で運用されていることが前提条件です。更新の見落としを防ぐ運用は、その土台作りに寄与します。</p>
+            <p><strong>ページ速度への影響:</strong> 本プラグインは管理画面専用で、サイトの公開側（フロントエンド）には CSS / JavaScript を一切読み込みません。ページ表示速度や Core Web Vitals に影響を与えない設計です。</p>
+        </section>
+
+        <figure class="infographic">
+            <img src="images/infographics/overview-flow.png" alt="プラグイン全体のワークフロー: GitHub上のリポジトリ群からマニフェストが生成され、プラグインが取得・照合して管理画面とメールで通知するまでの流れ">
+            <figcaption>図: プラグインの全体ワークフロー</figcaption>
+        </figure>
+
+        <section>
+            <h2>目次</h2>
+            <ul>
+                <li><a href="index.html">概要</a> - プラグインの概要と主要機能の紹介</li>
+                <li><a href="setup.html">インストール・初期設定</a> - インストール手順と初期設定の方法</li>
+                <li><a href="updates.html">更新一覧と更新の種類</a> - 更新一覧の見方と 3 分類（セキュリティ / バグ修正 / 機能）の意味</li>
+                <li><a href="notifications.html">通知（メール・ダッシュボード）</a> - ダッシュボードウィジェットとメール通知の設定</li>
+                <li><a href="news.html">作者ニュース</a> - 作者の最新ニュースの表示と設定</li>
+                <li><a href="troubleshooting.html">トラブルシューティング</a> - よくある問題と解決方法</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>動作要件</h2>
+            <ul>
+                <li>WordPress 5.8 以上</li>
+                <li>PHP 7.2 以上</li>
+                <li>特別な PHP 拡張・アクセストークン・API キーは不要</li>
+                <li>外部通信先: マニフェスト配信元（既定 raw.githubusercontent.com）と www.tsuyoshikashiwazaki.jp（ニュース取得、無効化可）</li>
+            </ul>
+        </section>
+
+        <nav class="page-nav">
+            <span></span>
+            <a href="setup.html" class="next">インストール・初期設定 &raquo;</a>
+        </nav>
+
+        <footer class="manual-footer">
+            <p>作者: <a href="https://www.tsuyoshikashiwazaki.jp/profile/" target="_blank" rel="noopener">柏崎剛（Tsuyoshi Kashiwazaki）</a></p>
+            <p>プラグイン: Kashiwazaki SEO ControlPanel v1.0.2 | <a href="https://github.com/TsuyoshiKashiwazaki/wp-plugin-kashiwazaki-seo-control-panel" target="_blank" rel="noopener">GitHub</a></p>
+        </footer>
+    </main>
+
+    <div class="lightbox"></div>
+    <script src="js/manual.js"></script>
+</body>
+</html>

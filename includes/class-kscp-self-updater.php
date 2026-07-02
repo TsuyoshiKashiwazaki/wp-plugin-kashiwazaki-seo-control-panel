@@ -63,7 +63,11 @@ class KSCP_Self_Updater {
 	}
 
 	/**
-	 * 自己更新パッケージ URL として信頼してよいか（https + GitHub ホスト限定）。
+	 * 自己更新パッケージ URL として信頼してよいか。
+	 *
+	 * https + GitHub ホストに加え、URL パスが作者アカウント（KSCP_GITHUB_OWNER）の
+	 * 本プラグインリポジトリを指すことまで検証する。マニフェストが改ざんされても
+	 * 第三者リポジトリの zip はインストールさせない（多重防御）。
 	 *
 	 * @param string $url URL。
 	 * @return bool
@@ -73,13 +77,22 @@ class KSCP_Self_Updater {
 		if ( empty( $parts['scheme'] ) || 'https' !== strtolower( $parts['scheme'] ) || empty( $parts['host'] ) ) {
 			return false;
 		}
-		$host    = strtolower( $parts['host'] );
-		$allowed = array( 'github.com', 'codeload.github.com', 'objects.githubusercontent.com', 'raw.githubusercontent.com', 'api.github.com' );
-		if ( in_array( $host, $allowed, true ) ) {
-			return true;
+		$host  = strtolower( $parts['host'] );
+		$path  = isset( $parts['path'] ) ? strtolower( $parts['path'] ) : '';
+		$owner = strtolower( KSCP_GITHUB_OWNER );
+		$repo  = strtolower( KSCP_PLUGIN_SLUG );
+
+		// ホストごとの owner/repo パス位置（owner を URL から検証できないホストは許可しない）。
+		$prefixes = array(
+			'github.com'                => '/' . $owner . '/' . $repo . '/',
+			'codeload.github.com'       => '/' . $owner . '/' . $repo . '/',
+			'raw.githubusercontent.com' => '/' . $owner . '/' . $repo . '/',
+			'api.github.com'            => '/repos/' . $owner . '/' . $repo . '/',
+		);
+		if ( ! isset( $prefixes[ $host ] ) ) {
+			return false;
 		}
-		// github.com のサブドメインも許可。
-		return (bool) preg_match( '/\.github\.com$/', $host );
+		return 0 === strpos( $path, $prefixes[ $host ] );
 	}
 
 	/**

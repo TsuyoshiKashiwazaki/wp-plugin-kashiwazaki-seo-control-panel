@@ -80,16 +80,19 @@ class KSCP_Update_Checker {
 				)
 			);
 			$installed_version = '';
+			$installed_active  = false;
 			$map = ( 'theme' === $type ) ? $installed_t : $installed_p;
 			foreach ( $keys as $k ) {
 				if ( '' !== $k && isset( $map[ $k ] ) ) {
-					$installed_version = $map[ $k ];
+					$installed_version = $map[ $k ]['version'];
+					$installed_active  = ! empty( $map[ $k ]['active'] );
 					break;
 				}
 			}
-			// 自身は実行中の定数から確実に取得。
+			// 自身は実行中の定数から確実に取得（実行できている＝有効）。
 			if ( ! empty( $t['is_self'] ) ) {
 				$installed_version = KSCP_VERSION;
+				$installed_active  = true;
 			}
 
 			// 最新版データはマニフェスト由来（per-repo API 呼び出しなし）。
@@ -138,6 +141,7 @@ class KSCP_Update_Checker {
 				'name'              => $t['name'],
 				'is_self'           => ! empty( $t['is_self'] ),
 				'installed_version' => $installed_version,
+				'installed_active'  => $installed_active,
 				'latest_version'    => $latest_version,
 				'version_source'    => 'manifest',
 				'status'            => $status,
@@ -321,22 +325,39 @@ class KSCP_Update_Checker {
 	/**
 	 * ディレクトリ名/リポジトリ名を正規化したコア slug に変換。
 	 *
-	 * `wp-plugin-` / `wp-theme-` プレフィックスと `-main` / `-master` /
-	 * `-trunk` サフィックス（GitHub ZIP 展開由来）を除去し、小文字化する。
-	 * これによりインストールディレクトリ名と GitHub リポジトリ名の表記揺れを吸収する。
+	 * GitHub ZIP 展開由来の各種表記揺れを吸収する: `wp-plugin-` / `wp-theme-`
+	 * プレフィックス、owner 接頭辞（API zipball の `Owner-repo-sha` 形式）、
+	 * `-main` / `-master` / `-trunk`（ブランチ ZIP）、バージョンサフィックス
+	 * （タグ ZIP の `-1.0.0` / `-v1.0.0`）、commit SHA サフィックス（zipball）。
 	 *
-	 * @param string $slug 入力。
+	 * @param string $slug          入力。
+	 * @param bool   $strip_residue タグ ZIP / zipball 由来の残骸サフィックス
+	 *                              （バージョン・SHA）も除去するか。false は
+	 *                              「正規のディレクトリ名か」の判定に使う。
 	 * @return string 正規化コア slug。
 	 */
-	public static function normalize_slug( $slug ) {
+	public static function normalize_slug( $slug, $strip_residue = true ) {
 		$slug = strtolower( trim( (string) $slug ) );
+		// GitHub API zipball（Owner-repo-sha）の owner 接頭辞を除去。
+		$owner = strtolower( KSCP_GITHUB_OWNER );
+		if ( '' !== $owner && 0 === strpos( $slug, $owner . '-' ) ) {
+			$slug = substr( $slug, strlen( $owner ) + 1 );
+		}
 		$slug = preg_replace( '/^wp-(plugin|theme)-/', '', $slug );
 		$slug = preg_replace( '/-(main|master|trunk)$/', '', $slug );
+		if ( $strip_residue ) {
+			// タグ/リリース ZIP 由来のバージョンサフィックスを除去
+			// （例: -1.0.0 / -v1.0.0 / -1.0.6-dev）。ドット付き数字に限定する
+			// ことで、名前自体に数字を含む slug（例: custom-404）を巻き込まない。
+			$slug = preg_replace( '/-v?\d+(?:\.\d+)+(?:-[0-9a-z.]+)?$/', '', $slug );
+			// API zipball 由来の commit SHA サフィックス（7〜40 桁の 16 進）。
+			$slug = preg_replace( '/-[0-9a-f]{7,40}$/', '', $slug );
+		}
 		return $slug;
 	}
 
 	/**
-	 * インストール済みプラグインの 正規化slug => version マップ。
+	 * インストール済みプラグインの 正規化slug => {version, active} マップ。
 	 *
 	 * @return array
 	 */
@@ -344,33 +365,73 @@ class KSCP_Update_Checker {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-		$map = array();
+		$canon    = array();
+		$fallback = array();
 		foreach ( get_plugins() as $file => $data ) {
 			// $file 例: "kashiwazaki-seo-link-card/foo.php" → ディレクトリ名を正規化。
 			$dir = ( false !== strpos( $file, '/' ) ) ? dirname( $file ) : basename( $file, '.php' );
 			$key = self::normalize_slug( $dir );
-			if ( '' !== $key && ! isset( $map[ $key ] ) && ! empty( $data['Version'] ) ) {
-				$map[ $key ] = $data['Version'];
+			if ( '' === $key || empty( $data['Version'] ) ) {
+				continue;
 			}
+			$active = is_plugin_active( $file ) || ( is_multisite() && is_plugin_active_for_network( $file ) );
+			self::collect_candidate( $canon, $fallback, $dir, $key, $data['Version'], $active );
 		}
-		return $map;
+		// 正規名ディレクトリを優先（残骸ディレクトリより後勝ちで上書き）。
+		return array_merge( $fallback, $canon );
 	}
 
 	/**
-	 * インストール済みテーマの 正規化slug => version マップ。
+	 * 同一の正規化キーに複数ディレクトリが該当した場合の採用規則。
+	 *
+	 * タグ ZIP の展開残骸（例: foo-1.0.0/）と正規ディレクトリ（foo/）が共存
+	 * すると、列挙順による偶然でどちらのバージョンが採用されるか不定になる。
+	 * そこで (1) 残骸サフィックスの除去が不要だった正規名ディレクトリを最優先、
+	 * (2) 同格同士はより新しいバージョンを採用、と決定的に選ぶ。
+	 *
+	 * @param array  $canon    正規名候補（参照渡し）。
+	 * @param array  $fallback 残骸名候補（参照渡し）。
+	 * @param string $dir      ディレクトリ名。
+	 * @param string $key      正規化キー。
+	 * @param string $ver      バージョン。
+	 * @param bool   $active   有効化されているか。
+	 */
+	private static function collect_candidate( &$canon, &$fallback, $dir, $key, $ver, $active = false ) {
+		$is_canonical = ( self::normalize_slug( $dir, false ) === $key );
+		$entry        = array( 'version' => $ver, 'active' => (bool) $active );
+		if ( $is_canonical ) {
+			$target =& $canon;
+		} else {
+			$target =& $fallback;
+		}
+		if ( ! isset( $target[ $key ] )
+			|| version_compare( $ver, $target[ $key ]['version'], '>' )
+			// 同バージョンなら有効化されている方（＝実際に使われているディレクトリ）を採用。
+			|| ( $active && ! $target[ $key ]['active'] && version_compare( $ver, $target[ $key ]['version'], '==' ) ) ) {
+			$target[ $key ] = $entry;
+		}
+	}
+
+	/**
+	 * インストール済みテーマの 正規化slug => {version, active} マップ。
 	 *
 	 * @return array
 	 */
 	private function installed_themes() {
-		$map = array();
+		$canon    = array();
+		$fallback = array();
+		// 使用中テーマ（子テーマの場合は親テーマも使用中とみなす）。
+		$active_sheets = array( get_stylesheet(), get_template() );
 		foreach ( wp_get_themes() as $stylesheet => $theme ) {
 			$ver = $theme->get( 'Version' );
 			$key = self::normalize_slug( $stylesheet );
-			if ( $ver && '' !== $key && ! isset( $map[ $key ] ) ) {
-				$map[ $key ] = $ver;
+			if ( ! $ver || '' === $key ) {
+				continue;
 			}
+			$active = in_array( $stylesheet, $active_sheets, true );
+			self::collect_candidate( $canon, $fallback, $stylesheet, $key, $ver, $active );
 		}
-		return $map;
+		return array_merge( $fallback, $canon );
 	}
 
 	/**

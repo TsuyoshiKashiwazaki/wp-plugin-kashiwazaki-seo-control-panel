@@ -163,6 +163,21 @@
 .kscp-pill--ok { background: #e6f4ea; color: #1a7a33; }
 .kscp-pill--none { background: #f0f0f1; color: #787c82; }
 .kscp-pill--unknown { background: #f7d9d9; color: #8a1f1f; }
+.kscp-pill--on { background: #e6f0f9; color: #135e96; }
+.kscp-pill--off { background: #f0f0f1; color: #646970; border: 1px dashed #c3c4c7; }
+.kscp-none { color: #a7aaad; }
+
+/* ブロック見出し（インストール済み / 未インストール） */
+.kscp-sec-title {
+	margin: 24px 0 8px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #1d2327;
+}
+.kscp-sec-title--missing { color: #646970; }
+.kscp-sec-desc { margin: 0 0 8px; color: #646970; }
+.kscp-tbl--missing .kscp-name { color: #50575e; }
+.kscp-r--missing td { background: #fafafa; }
 
 /* GitHub リンク */
 .kscp-gh { color: #a7aaad; text-decoration: none; }

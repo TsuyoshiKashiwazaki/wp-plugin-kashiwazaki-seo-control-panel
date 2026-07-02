@@ -96,11 +96,14 @@ class KSCP_Registry {
 			}
 		}
 
-		// 除外（本体は除外不可）。
-		$excluded = (array) $this->settings->get( 'excluded_slugs', array() );
-		foreach ( $excluded as $slug ) {
-			if ( $slug !== KSCP_PLUGIN_SLUG && isset( $merged[ $slug ] ) ) {
-				unset( $merged[ $slug ] );
+		// 除外（本体は除外不可）。保存済み設定・マニフェスト双方の大文字小文字の揺れを吸収して照合する。
+		$excluded = array_map( 'strtolower', array_map( 'strval', (array) $this->settings->get( 'excluded_slugs', array() ) ) );
+		$excluded = array_diff( $excluded, array( strtolower( KSCP_PLUGIN_SLUG ) ) );
+		if ( $excluded ) {
+			foreach ( array_keys( $merged ) as $key ) {
+				if ( in_array( strtolower( (string) $key ), $excluded, true ) ) {
+					unset( $merged[ $key ] );
+				}
 			}
 		}
 

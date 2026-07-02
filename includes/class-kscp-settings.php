@@ -107,7 +107,8 @@ class KSCP_Settings {
 		}
 
 		if ( isset( $input['manifest_url'] ) ) {
-			$out['manifest_url'] = esc_url_raw( trim( (string) $input['manifest_url'] ) );
+			// 更新チェーンの起点なので https のみ許可（http は空になり既定 URL にフォールバック）。
+			$out['manifest_url'] = esc_url_raw( trim( (string) $input['manifest_url'] ), array( 'https' ) );
 		}
 
 		// 監視除外 slug（カンマ/改行区切り）。
@@ -145,12 +146,14 @@ class KSCP_Settings {
 	/**
 	 * slug サニタイズ（ディレクトリ名/スラッグ用）。
 	 *
+	 * 大文字コピペ（リポジトリ名・表示名由来）でも除外照合が効くよう小文字に正規化する。
+	 *
 	 * @param string $slug 入力。
 	 * @return string
 	 */
 	public function sanitize_slug( $slug ) {
-		$slug = (string) $slug;
-		$slug = preg_replace( '/[^A-Za-z0-9._\-\/]/', '', $slug );
+		$slug = strtolower( (string) $slug );
+		$slug = preg_replace( '/[^a-z0-9._\-\/]/', '', $slug );
 		return $slug;
 	}
 }

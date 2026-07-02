@@ -267,7 +267,11 @@ class KSCP_Admin {
 		$this->core->news->flush();
 		$this->core->checker->run_check( true );
 
-		$this->redirect_with( 'overview', 'rechecked' );
+		// 取得失敗（フォールバックキャッシュ利用）を成功と偽らない。
+		$status = $this->core->manifest->status();
+		$notice = empty( $status['fetched'] ) ? 'recheck_failed' : 'rechecked';
+
+		$this->redirect_with( 'overview', $notice );
 	}
 
 	/**
@@ -358,8 +362,9 @@ class KSCP_Admin {
 	 */
 	public static function render_notice( $notice ) {
 		$map = array(
-			'saved'     => array( 'success', __( '設定を保存しました。', 'kashiwazaki-seo-control-panel' ) ),
-			'rechecked' => array( 'success', __( '最新情報を再取得しました。', 'kashiwazaki-seo-control-panel' ) ),
+			'saved'          => array( 'success', __( '設定を保存しました。', 'kashiwazaki-seo-control-panel' ) ),
+			'rechecked'      => array( 'success', __( '最新情報を再取得しました。', 'kashiwazaki-seo-control-panel' ) ),
+			'recheck_failed' => array( 'warning', __( 'マニフェストの再取得に失敗しました。前回取得済みのデータを表示しています。詳細は診断タブをご確認ください。', 'kashiwazaki-seo-control-panel' ) ),
 		);
 		if ( ! isset( $map[ $notice ] ) ) {
 			return;

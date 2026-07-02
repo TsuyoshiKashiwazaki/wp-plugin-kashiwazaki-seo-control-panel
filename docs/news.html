@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作者ニュース - SEO ControlPanel マニュアル</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button class="hamburger-btn" aria-label="メニューを開く">&#9776;</button>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2 style="color:#fff;">SEO ControlPanel</h2>
+            <span class="version">v1.0.2</span>
+            <img src="images/main-visual.png" alt="" style="width:100%;border-radius:4px;margin-top:8px;">
+        </div>
+        <ul>
+            <li><a href="index.html">概要</a></li>
+            <li><a href="setup.html">インストール・初期設定</a></li>
+            <li><a href="updates.html">更新一覧と更新の種類</a></li>
+            <li><a href="notifications.html">通知（メール・ダッシュボード）</a></li>
+            <li><a href="news.html">作者ニュース</a></li>
+            <li><a href="troubleshooting.html">トラブルシューティング</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <h1>作者ニュース</h1>
+        <p class="lead">「ニュース」タブには、作者サイト（www.tsuyoshikashiwazaki.jp）の最新ニュースが 6 件表示されます。プラグインのリリース情報やセミナー・メディア掲載などを管理画面から確認できます。</p>
+
+        <section>
+            <h2>画面の見方</h2>
+            <figure class="screenshot">
+                <img src="images/screenshots/02-news.png" alt="ニュースタブ: 最新ニュース 6 件がサムネイル付きカードで表示される" class="lightbox-trigger">
+                <figcaption>図: ニュースタブ（最新 6 件のカード表示）</figcaption>
+            </figure>
+            <ul>
+                <li>各カードにはサムネイル画像・公開日・タイトル・抜粋が表示されます</li>
+                <li>タイトルをクリックすると作者サイトの該当記事が新しいタブで開きます</li>
+                <li>右上の「すべてのニュースを見る」から作者サイトのニュース一覧へ移動できます</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>取得の仕組み</h2>
+            <ul>
+                <li>作者サイトの REST API からニュースを取得し、取得できない場合は RSS フィードへ自動的にフォールバックします</li>
+                <li>取得結果は 6 時間キャッシュされます。「更新一覧」タブの「今すぐチェック」を押すとニュースも再取得されます</li>
+                <li>送信するのは取得リクエストのみで、サイトの個人情報やアクセストークンは送信されません</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>ニュース取得を無効にする</h2>
+            <p>「通知・設定」タブの「作者ニュース取得」のチェックを外して保存すると、ニュースの取得と表示を停止できます。</p>
+            <div class="callout callout-note">
+                <p>ニュース取得を無効にしても、更新監視・通知などプラグインの他の機能には影響しません。</p>
+            </div>
+        </section>
+
+        <nav class="page-nav">
+            <a href="notifications.html" class="prev">&laquo; 通知（メール・ダッシュボード）</a>
+            <a href="troubleshooting.html" class="next">トラブルシューティング &raquo;</a>
+        </nav>
+
+        <footer class="manual-footer">
+            <p>作者: <a href="https://www.tsuyoshikashiwazaki.jp/profile/" target="_blank" rel="noopener">柏崎剛（Tsuyoshi Kashiwazaki）</a></p>
+            <p>プラグイン: Kashiwazaki SEO ControlPanel v1.0.2 | <a href="https://github.com/TsuyoshiKashiwazaki/wp-plugin-kashiwazaki-seo-control-panel" target="_blank" rel="noopener">GitHub</a></p>
+        </footer>
+    </main>
+
+    <div class="lightbox"></div>
+    <script src="js/manual.js"></script>
+</body>
+</html>
